@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JobPilot AI — SaaS-ready job application beta</title>
+  <meta name="description" content="Evaluate job fit, save a private candidate profile, generate a structured application pack, export data, and manage application history." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="JobPilot AI home"><span class="logo">JP</span><span>JobPilot AI</span></a>
+    <nav><a href="#workflow">Workflow</a><a href="#demo">Live app</a><a href="#pricing">Plans</a><a href="#privacy">Privacy</a><a class="nav-cta" href="#demo">Try demo</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Live backend beta • account-gated data • no fake auto-apply claims</p>
+        <h1>Stop sending generic resumes. Score the job, expose the gaps, then apply with a plan.</h1>
+        <p class="lede">JobPilot AI turns a candidate profile and pasted job post into a saved application analysis: fit score, risk notes, CV tailoring plan, cover-letter angle, interview prep and Markdown export.</p>
+        <div class="actions">
+          <a class="button primary" href="#demo">Run a live analysis</a>
+          <a class="button ghost" href="#privacy">See privacy controls</a>
+        </div>
+        <div class="metrics" aria-label="Product highlights">
+          <div><strong>Private beta</strong><span>token-gated account workspace</span></div>
+          <div><strong>Export/delete</strong><span>data controls included</span></div>
+          <div><strong>Live API</strong><span>persistent application history</span></div>
+        </div>
+      </div>
+      <aside class="terminal-card" aria-label="Workflow preview">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <pre><code>POST /api/accounts
+✓ workspace created
+
+POST /api/profiles
+✓ profile saved privately
+
+POST /api/analyze
+Fit score: 82 / 100
+Recommendation: Apply with positioning
+
+Generated:
+• CV tailoring plan
+• interview prep
+• export.md</code></pre>
+      </aside>
+    </section>
+
+    <section class="strip">
+      <span>For job seekers</span><span>career coaches</span><span>outplacement firms</span><span>bootcamps</span><span>recruitment communities</span>
+    </section>
+
+    <section id="workflow" class="section">
+      <div class="section-head"><p class="eyebrow">What we sell</p><h2>A repeatable application workflow, not raw code.</h2><p>The product is the packaged outcome: better-fit applications, less wasted time, and a saved application pack users can act on.</p></div>
+      <div class="cards three">
+        <article><span class="num">01</span><h3>Create a private workspace</h3><p>Start with an email-based beta account and local access token. This is not full enterprise auth yet, but it blocks public cross-user browsing.</p></article>
+        <article><span class="num">02</span><h3>Analyze before applying</h3><p>Score match, missing requirements, role risk, deal-breakers and suggested positioning before spending time on a bad application.</p></article>
+        <article><span class="num">03</span><h3>Export or delete data</h3><p>Download application packs, export account data, or delete the workspace. That is the baseline for a credible SaaS beta.</p></article>
+      </div>
+    </section>
+
+    <section id="demo" class="section app-panel">
+      <div class="section-head">
+        <p class="eyebrow">Live beta app</p>
+        <h2>Create an account, save a profile, paste a job, generate a saved application pack.</h2>
+        <p>This backend is live and deterministic. It does not call an LLM yet, does not store files, does not process payments, and does not auto-apply. It is now account-gated enough for controlled beta testing.</p>
+      </div>
+
+      <form id="accountForm" class="form-card account-card">
+        <h3>0. Create account</h3>
+        <label>Email<input id="accountEmail" type="email" value="jane@example.com" required /></label>
+        <div class="demo-actions"><button class="button primary" type="submit">Create account</button><button id="deleteAccountBtn" class="button ghost" type="button">Delete workspace</button><button id="exportAccountBtn" class="button ghost" type="button">Export account data</button></div>
+        <p class="status" id="accountStatus">No account yet. Your beta access token is stored in this browser only.</p>
+      </form>
+
+      <div class="app-grid">
+        <form id="profileForm" class="form-card">
+          <h3>1. Candidate profile</h3>
+          <label>Name / nickname<input id="name" value="Jane Candidate" /></label>
+          <label>Target roles<input id="targetRoles" value="AI Product Manager, Product Lead" /></label>
+          <label>Location / preference<input id="location" value="Remote or hybrid" /></label>
+          <label>Years experience<input id="yearsExperience" type="number" value="6" min="0" max="50" /></label>
+          <label>Core skills<textarea id="skills" rows="4">AI workflow automation, B2B SaaS, analytics, customer discovery, stakeholder management</textarea></label>
+          <label>Industries<input id="industries" value="SaaS, AI, productivity software" /></label>
+          <label>Deal-breakers<input id="dealbreakers" value="onsite only" /></label>
+          <label>CV / proof text<textarea id="cvText" rows="5">Shipped AI workflow prototypes, customer discovery programs, analytics dashboards, and stakeholder alignment for SaaS products.</textarea></label>
+          <button class="button primary" type="submit">Save profile</button>
+          <p class="status" id="profileStatus">No profile saved yet.</p>
+        </form>
+
+        <form id="analysisForm" class="form-card">
+          <h3>2. Job analysis</h3>
+          <label>Company<input id="company" value="Acme AI" /></label>
+          <label>Role title<input id="roleTitle" value="Senior Product Manager" /></label>
+          <label>Job URL<input id="jobUrl" value="https://example.com/job" /></label>
+          <label>Job posting / target role<textarea id="roleText" rows="9">Senior Product Manager for AI workflow automation. Requires B2B SaaS, analytics, customer discovery, stakeholder management, shipping AI products, remote team leadership, and enterprise customers.</textarea></label>
+          <div class="demo-actions"><button id="scoreBtn" type="submit" class="button primary">Generate preview</button><button id="resetBtn" type="button" class="button ghost">Reset</button></div>
+        </form>
+
+        <div class="result-card wide" id="result" aria-live="polite">
+          <p class="eyebrow">Saved analysis result</p>
+          <h3>Fit score: <span id="score">—</span>/100</h3>
+          <div class="bar"><span id="bar" style="width:0%"></span></div>
+          <p><strong id="recommendation">Create an account, save a profile and run an analysis.</strong></p>
+          <h4>Recommended positioning</h4><p id="positioning">Results will appear here.</p>
+          <div class="result-columns">
+            <div><h4>Matched skills</h4><ul id="matchedSkills"><li>—</li></ul></div>
+            <div><h4>Missing / risky requirements</h4><ul id="gaps"><li>—</li></ul></div>
+          </div>
+          <h4>Output package</h4><ul id="outputs"><li>Fit score with go / no-go recommendation</li><li>Targeted CV rewrite plan</li><li>Cover letter angle</li><li>Interview prep bullets</li></ul>
+          <div class="actions"><a class="button ghost disabled" id="exportLink" href="#">Export Markdown</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split">
+      <div><p class="eyebrow">Tracker</p><h2>Application history is persisted and scoped to your beta account.</h2></div>
+      <div class="take"><div id="tracker" class="tracker"><p>No applications yet. Run an analysis above.</p></div></div>
+    </section>
+
+    <section id="pricing" class="section split">
+      <div><p class="eyebrow">Plans</p><h2>Built for high-stakes applications where generic AI output is not good enough.</h2></div>
+      <div class="take"><p><strong>Application Pack:</strong> tailored CV plan, cover-letter angle, fit review and interview prep for one target role.</p><p><strong>Active Search:</strong> maintain your profile, compare roles, track applications and generate polished materials as you shortlist jobs.</p><p><strong>Coach / Bootcamp:</strong> give candidates a repeatable workflow while keeping final judgment human-led.</p>
+        <form id="waitlistForm" class="inline-form"><input id="waitlistEmail" type="email" placeholder="email for beta / paid pilot" required /><select id="userType"><option value="job_seeker">Job seeker</option><option value="career_coach">Career coach</option><option value="bootcamp">Bootcamp</option><option value="community">Community</option></select><button class="button primary" type="submit">Join waitlist</button></form><p class="status" id="waitlistStatus">Beta pricing is being validated now.</p></div>
+    </section>
+
+    <section id="privacy" class="section credits">
+      <h2>Privacy and SaaS readiness</h2>
+      <p>Beta privacy: pasted profile/job text is stored on this server for application history. Do not paste national IDs, home addresses, references' private contact details, or anything you would not share with a beta SaaS.</p>
+      <p>Implemented controls: account access token, account-scoped data, rate limiting, hidden admin endpoint unless token configured, export data, delete workspace, server-side backups, and public <a href="/privacy.html">Privacy</a> / <a href="/terms.html">Terms</a> pages.</p>
+    </section>
+  </main>
+
+  <footer>© 2026 JobPilot AI beta • Built for fast market validation</footer>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "jobpilot-ai",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/smoke.js && node tests/api-smoke.js",
+    "test:api": "node tests/api-smoke.js"
+  }
+}

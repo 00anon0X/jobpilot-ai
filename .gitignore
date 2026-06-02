@@ -1,0 +1,30 @@
+# Runtime state
+/data/
+/upstream/
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+
+# Secrets / local env
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Dependencies and caches
+node_modules/
+.npm/
+.cache/
+.DS_Store
+
+# Generated/downloadable artifacts
+public/*.zip
+*.log
+
+# Local editor files
+.vscode/
+.idea/
