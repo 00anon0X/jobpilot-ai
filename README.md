@@ -35,6 +35,8 @@ HOST=127.0.0.1 PORT=3117 npm start
 
 Open <http://127.0.0.1:3117>.
 
+No production or test deployment URL is listed in this repository.
+
 ## API overview
 
 - `POST /api/accounts`
